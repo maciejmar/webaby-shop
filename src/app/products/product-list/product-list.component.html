@@ -1,0 +1,14 @@
+<div class="shop-wrapper">
+  <h1>Oprogramowanie Webaby</h1>
+  <div class="product-grid">
+    @for (product of products$ | async; track product.id) {
+      <div class="glass-card">
+        <div class="badge">{{ product.category }}</div>
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.description }}</p>
+        <div class="price">{{ product.price }} PLN</div>
+        <button class="buy-btn">Dodaj do koszyka</button>
+      </div>
+    }
+  </div>
+</div>

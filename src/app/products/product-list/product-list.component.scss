@@ -1,0 +1,36 @@
+.shop-wrapper {
+  background: radial-gradient(circle at top left, #2e026d, #15162c);
+  min-height: 100vh;
+  padding: 50px;
+  color: white;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 20px;
+  transition: transform 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-10px);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.buy-btn {
+  background: linear-gradient(90deg, #ff00cc, #3333ff);
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  width: 100%;
+}

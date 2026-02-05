@@ -1,0 +1,32 @@
+<div class="glass-container">
+  <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="glass-form">
+    <h2>Rejestracja Webaby</h2>
+    
+    <div class="input-group">
+      <input type="email" formControlName="email" placeholder="Email">
+      <small *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+        Podaj poprawny adres email.
+      </small>
+    </div>
+
+    <div class="input-group">
+      <input type="password" formControlName="password" placeholder="Hasło">
+      <small *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+        Hasło musi mieć min. 6 znaków.
+      </small>
+    </div>
+
+    <div class="input-group">
+      <input type="password" formControlName="confirmPassword" placeholder="Powtórz Hasło">
+      <small *ngIf="registerForm.get('confirmPassword')?.touched && registerForm.hasError('notSame')">
+        Hasła nie są identyczne.
+      </small>
+    </div>
+
+    <button type="submit" [disabled]="registerForm.invalid">Zarejestruj się</button>
+    
+    <p class="switch-link">
+      Masz już konto? <a routerLink="/login">Zaloguj się</a>
+    </p>
+  </form>
+</div>
