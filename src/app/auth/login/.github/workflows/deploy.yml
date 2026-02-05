@@ -1,0 +1,50 @@
+name: Deploy webaby-shop to server (nginx)
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Prepare SSH known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Detect build output dir
+        run: |
+          if [ -d "dist/webaby-shop/browser" ]; then
+            echo "BUILD_DIR=dist/webaby-shop/browser/" >> $GITHUB_ENV
+          else
+            echo "BUILD_DIR=dist/webaby-shop/" >> $GITHUB_ENV
+          fi
+
+      - name: Deploy via rsync
+        uses: burnett01/rsync-deployments@7.0.2
+        with:
+          switches: -avzr --delete
+          path: ${{ env.BUILD_DIR }}
+          remote_path: /var/www/webaby-shop/
+          remote_host: ${{ secrets.SSH_HOST }}
+          remote_user: ${{ secrets.SSH_USER }}
+          remote_port: ${{ secrets.SSH_PORT }}
+          remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
