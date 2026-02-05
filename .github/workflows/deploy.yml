@@ -2,7 +2,7 @@ name: Deploy webaby-shop to server (nginx)
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
 jobs:
   deploy:
